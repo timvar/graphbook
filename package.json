@@ -1,31 +1,64 @@
 {
   "name": "graphbook",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "react": "^16.10.2",
-    "react-dom": "^16.10.2",
-    "react-scripts": "3.2.0"
-  },
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "start": "webpack-dev-server --config ./webpack.config.js",
+    "client": "webpack-dev-server --devtool inline-source-map --hot --config webpack.config.js",
+    "server": "nodemon --exec babel-node --watch src/server src/server/index.js",
+    "client:build": "webpack --config webpack.client.build.config.js"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.6.4",
+    "@babel/node": "^7.6.3",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-proposal-decorators": "^7.6.0",
+    "@babel/plugin-proposal-export-namespace-from": "^7.5.2",
+    "@babel/plugin-proposal-function-sent": "^7.5.0",
+    "@babel/plugin-proposal-numeric-separator": "^7.2.0",
+    "@babel/plugin-proposal-throw-expressions": "^7.2.0",
+    "@babel/preset-env": "^7.6.3",
+    "@babel/preset-react": "^7.6.3",
+    "@babel/register": "^7.6.2",
+    "babel-eslint": "^10.0.3",
+    "babel-loader": "^8.0.6",
+    "clean-webpack-plugin": "^3.0.0",
+    "css-loader": "^3.2.0",
+    "eslint": "^6.6.0",
+    "eslint-config-airbnb": "^18.0.1",
+    "eslint-config-prettier": "^6.5.0",
+    "eslint-loader": "^3.0.2",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-prettier": "^3.1.1",
+    "eslint-plugin-react": "^7.16.0",
+    "eslint-plugin-react-hooks": "^1.7.0",
+    "file-loader": "^4.2.0",
+    "html-webpack-plugin": "^3.2.0",
+    "ignore-styles": "^5.0.1",
+    "prettier": "1.18.2",
+    "react-addons-test-utils": "^15.6.2",
+    "react-hot-loader": "^4.12.15",
+    "style-loader": "^1.0.0",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.9",
+    "webpack-dev-server": "^3.9.0"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "dependencies": {
+    "apollo-server-express": "^2.9.7",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "graphql": "^14.5.8",
+    "graphql-tools": "^4.0.6",
+    "helmet": "^3.21.2",
+    "nodemon": "^1.19.4",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
+    "react-helmet": "^5.2.1"
   }
 }
