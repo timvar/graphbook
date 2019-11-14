@@ -1,59 +1,44 @@
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
+import { withApollo } from 'react-apollo';
+import Feed from './Feed';
+import Chats from './Chats';
 import '../assets/css/style.css';
+import './components/fontawesome';
+import Bar from './components/bar';
+import LoginRegisterForm from './components/loginregister';
+import CurrentUserQuery from './components/queries/currentUser';
+import '@synapsestudios/react-drop-n-crop/lib/react-drop-n-crop.min.css';
 
-const initPosts = [
-  {
-    id: 2,
-    text: 'Lorem ipsum',
-    user: {
-      avatar: '../uploads/avatar1.png',
-      username: 'Test User',
-    },
-  },
-  {
-    id: 1,
-    text: 'Lorem ipsum',
-    user: {
-      avatar: '../uploads/avatar2.png',
-      username: 'Test User 2',
-    },
-  },
-];
-
-export default class App extends Component {
+class App extends Component {
   constructor(props) {
     super(props);
+    this.unsubscribe = props.client.onResetStore(() =>
+      this.changeLoginState(false),
+    );
     this.state = {
-      posts: initPosts,
-      postContent: '',
+      loggedIn: false,
     };
   }
 
-  handlePostContentChange = event => {
-    this.setState({ postContent: event.target.value });
-  };
+  componentWillMount() {
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      this.setState({ loggedIn: true });
+    }
+  }
 
-  handleSubmit = event => {
-    event.preventDefault();
-    const { posts, postContent } = this.state;
-    const newPost = {
-      id: posts.length + 1,
-      text: postContent,
-      user: {
-        avatar: '../uploads/avatar1.png',
-        username: 'Fake User',
-      },
-    };
-    this.setState(prevState => ({
-      posts: [newPost, ...prevState.posts],
-      postContent: '',
-    }));
+  componentWillUnmount() {
+    // this.unsubscribe();
+  }
+
+  changeLoginState = loggedIn => {
+    console.log('loginstate', this.state.loggedIn);
+    this.setState({ loggedIn });
   };
 
   render() {
-    const { posts, postContent } = this.state;
-
+    const { loggedIn } = this.state;
     return (
       <div className="container">
         <Helmet>
@@ -63,28 +48,26 @@ export default class App extends Component {
             content="Newsfeed of all your friends on Graphbook"
           />
         </Helmet>
-        <div className="postForm">
-          <form onSubmit={this.handleSubmit}>
-            <textarea
-              value={postContent}
-              onChange={this.handlePostContentChange}
-              placeholder="Write your custom post!"
-            />
-            <input type="submit" value="Submit" />
-          </form>
-        </div>
-        <div className="feed">
-          {posts.map(post => (
-            <div key={post.id} className="post">
-              <div className="header">
-                <img alt="avatar" src={post.user.avatar} />
-                <h2>{post.user.username}</h2>
-              </div>
-              <p className="content">{post.text}</p>
-            </div>
-          ))}
-        </div>
+        {loggedIn ? (
+          <CurrentUserQuery>
+            <Feed />
+          </CurrentUserQuery>
+        ) : (
+          <LoginRegisterForm
+            changeLoginState={this.changeLoginState}
+          />
+        )}
       </div>
     );
   }
 }
+
+export default withApollo(App);
+
+/*
+<CurrentUserQuery>
+            <Bar />
+            <Feed />
+            <Chats />
+          </CurrentUserQuery>
+*/

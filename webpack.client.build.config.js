@@ -1,12 +1,11 @@
-/* eslint-disable import/no-extraneous-dependencies */
-/* eslint-disable spaced-comment */
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
-//const buildDirectory = 'dist';
-const outputDirectory = 'dist/client';
+const buildDirectory = 'dist';
+const outputDirectory = `${buildDirectory}/client`;
+
 module.exports = {
   mode: 'production',
   entry: './src/client/index.js',
@@ -38,7 +37,11 @@ module.exports = {
     ],
   },
   plugins: [
-    new CleanWebpackPlugin(),
+    new CleanWebpackPlugin({
+      cleanOnceBeforeBuildPatterns: [
+        path.join(__dirname, buildDirectory),
+      ],
+    }),
     new HtmlWebpackPlugin({
       template: './public/index.html',
     }),
@@ -47,3 +50,7 @@ module.exports = {
     }),
   ],
 };
+
+/*
+
+*/

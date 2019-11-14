@@ -1,20 +1,17 @@
-/* eslint-disable no-console */
-/* eslint-disable spaced-comment */
-import path from 'path';
 import express from 'express';
-import cors from 'cors';
+import path from 'path';
 import helmet from 'helmet';
+import cors from 'cors';
 import compress from 'compression';
-import db from './database';
 import servicesLoader from './services';
+import db from './database';
 
 const utils = {
   db,
 };
 const services = servicesLoader(utils);
-
-const app = express();
 const root = path.join(__dirname, '../../');
+const app = express();
 
 if (process.env.NODE_ENV === 'production') {
   app.use(helmet());
@@ -49,5 +46,4 @@ for (let i = 0; i < serviceNames.length; i += 1) {
 app.get('/', (req, res) => {
   res.sendFile(path.join(root, '/dist/client/index.html'));
 });
-
-app.listen(8000, () => console.log('working on port 8000'));
+app.listen(8000, () => console.log('Listening on port 8000!'));

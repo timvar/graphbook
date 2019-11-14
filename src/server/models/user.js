@@ -1,10 +1,15 @@
-'use strict';
+/* eslint-disable spaced-comment */
+// eslint-disable-next-line strict
+//'use strict';
+
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
     'User',
     {
       avatar: DataTypes.STRING,
       username: DataTypes.STRING,
+      email: DataTypes.STRING,
+      password: DataTypes.STRING,
     },
     {},
   );

@@ -3,7 +3,7 @@ import configFile from '../config';
 import models from '../models';
 
 const env = process.env.NODE_ENV || 'development';
-const config = configFile[env];
+const config = configFile.development;
 
 const sequelize = new Sequelize(
   config.database,

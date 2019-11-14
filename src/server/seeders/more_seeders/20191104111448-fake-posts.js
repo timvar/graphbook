@@ -1,4 +1,6 @@
-'use strict';
+/* eslint-disable spaced-comment */
+// eslint-disable-next-line strict
+//'use strict';
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
