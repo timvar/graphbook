@@ -41,35 +41,6 @@ const authLink = new ApolloLink((operation, forward) => {
   return forward(operation);
 });
 
-/*
-const errorLink = onError(({ graphQLErrors, networkError }) => {
-  if (graphQLErrors) {
-    console.log('graphQLError -errorLink');
-    graphQLErrors.map(({ message, locations, path, extensions }) => {
-      if (extensions.code === 'UNAUTHENTICATED') {
-        localStorage.removeItem('jwt');
-        client.resetStore();
-      }
-      console.log(
-        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
-      );
-    });
-    if (networkError) {
-      console.log(`[Network error]: ${networkError}`);
-    }
-  }
-});
-*/
-
-/*
-const link = ApolloLink.from([
-  loggerLink,
-  AuthLink,
-  errorLink,
-  httpLink(),
-]);
-*/
-
 const client = new ApolloClient({
   cache,
   link: ApolloLink.from([
@@ -98,25 +69,3 @@ const client = new ApolloClient({
 });
 
 export default client;
-
-/*
-onError(({ graphQLErrors, networkError }) => {
-      if (graphQLErrors) {
-        console.log('graphQLError -errorLink');
-        graphQLErrors.map(
-          ({ message, locations, path, extensions }) => {
-            if (extensions.code === 'UNAUTHENTICATED') {
-              localStorage.removeItem('jwt');
-              client.resetStore();
-            }
-            console.log(
-              `[GraphQL error - indeed]: Message: ${message}, Location: ${locations}, Path: ${path}`,
-            );
-          },
-        );
-        if (networkError) {
-          console.log(`[Network error]: ${networkError}`);
-        }
-      }
-    }),
-*/

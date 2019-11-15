@@ -49,6 +49,7 @@ export default class AddPostMutation extends Component {
 
     return (
       <Mutation
+        mutation={ADD_POST}
         update={(store, { data: { addPost } }) => {
           const query = {
             query: GET_POSTS,
@@ -73,7 +74,6 @@ export default class AddPostMutation extends Component {
             },
           },
         }}
-        mutation={ADD_POST}
       >
         {addPost =>
           React.Children.map(children, child => {

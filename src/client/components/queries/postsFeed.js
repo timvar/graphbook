@@ -42,7 +42,6 @@ export default class PostsFeedQuery extends Component {
   render() {
     const { children } = this.props;
     const variables = this.getVariables();
-    console.log('postFeed variables.limit', variables.limit);
 
     return (
       <Query query={GET_POSTS} variables={variables}>

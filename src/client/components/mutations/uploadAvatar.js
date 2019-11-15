@@ -21,27 +21,24 @@ const UPLOAD_AVATAR = gql`
   }
 `;
 
-export default class UploadAvatarMutation extends Component {
-  render() {
-    const { children } = this.props;
-    return (
-      <Mutation
-        update={(store, { data: { uploadAvatar } }) => {
-          const query = {
-            query: GET_CURRENT_USER,
-          };
-          const data = store.readQuery(query);
-          data.currentUser.avatar = uploadAvatar.url;
-          store.writeQuery({ ...query, data });
-        }}
-        mutation={UPLOAD_AVATAR}
-      >
-        {uploadAvatar =>
-          React.Children.map(children, child => {
-            return React.cloneElement(child, { uploadAvatar });
-          })
-        }
-      </Mutation>
-    );
-  }
+export default function UploadAvatarMutation({ children }) {
+  return (
+    <Mutation
+      update={(store, { data: { uploadAvatar } }) => {
+        const query = {
+          query: GET_CURRENT_USER,
+        };
+        const data = store.readQuery(query);
+        data.currentUser.avatar = uploadAvatar.url;
+        store.writeQuery({ ...query, data });
+      }}
+      mutation={UPLOAD_AVATAR}
+    >
+      {uploadAvatar =>
+        React.Children.map(children, child => {
+          return React.cloneElement(child, { uploadAvatar });
+        })
+      }
+    </Mutation>
+  );
 }

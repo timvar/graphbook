@@ -39,13 +39,13 @@ export default class FeedList extends Component {
   };
 
   render() {
-    const self = this;
     const { posts, fetchMore } = this.props;
     const { hasMore } = this.state;
+    console.log('posts', posts);
     return (
       <div className="feed">
         <InfiniteScroll
-          loadMore={() => self.loadMore(fetchMore)}
+          loadMore={() => this.loadMore(fetchMore)}
           hasMore={hasMore}
           loader={
             <div className="loader" key={'loader'}>

@@ -4,13 +4,14 @@ import AddPostMutation from './components/mutations/addPost';
 import FeedList from './components/post/feedlist';
 import PostForm from './components/post/form';
 
-export default function Feed() {
+export default function Feed({ currentUser }) {
   const queryVariables = { page: 0, limit: 10 };
+  console.log('Feed currentUser', currentUser);
 
   return (
     <div className="container">
       <AddPostMutation variables={queryVariables}>
-        <PostForm />
+        <PostForm user={currentUser} />
       </AddPostMutation>
       <PostsQuery variables={queryVariables}>
         <FeedList />

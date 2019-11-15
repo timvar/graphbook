@@ -1,7 +1,7 @@
 /* eslint-disable class-methods-use-this */
 import React, { Component } from 'react';
 
-class ChatsList extends Component {
+export default class ChatsList extends Component {
   usernamesToString(users) {
     const userList = users.slice(1);
     let usernamesString = '';
@@ -12,10 +12,12 @@ class ChatsList extends Component {
         usernamesString += ', ';
       }
     }
+    console.log('usernamesString', usernamesString);
     return usernamesString;
   }
 
   shorten(text) {
+    console.log('shorten');
     if (!text.length) {
       return '';
     }
@@ -25,8 +27,12 @@ class ChatsList extends Component {
     return text;
   }
 
+  handleKeyPress() {}
+
   render() {
+    console.log('chatslist');
     const { chats, openChat } = this.props;
+
     return (
       <div className="chats">
         {chats.map((chat, i) => (
@@ -63,5 +69,3 @@ class ChatsList extends Component {
     );
   }
 }
-
-export default ChatsList;

@@ -141,16 +141,14 @@ export default function resolver() {
         });
 
         return User.findAll().then(users => {
-          const usersRow = users[0];
-
           return Post.create({
             ...post,
           }).then(newPost => {
-            return Promise.all([newPost.setUser(usersRow.id)]).then(
-              () => {
-                return newPost;
-              },
-            );
+            return Promise.all([
+              newPost.setUser(context.user.dataValues.id),
+            ]).then(() => {
+              return newPost;
+            });
           });
         });
       },

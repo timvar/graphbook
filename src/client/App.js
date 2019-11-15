@@ -29,11 +29,10 @@ class App extends Component {
   }
 
   componentWillUnmount() {
-    // this.unsubscribe();
+    this.unsubscribe();
   }
 
   changeLoginState = loggedIn => {
-    console.log('loginstate', this.state.loggedIn);
     this.setState({ loggedIn });
   };
 
@@ -50,7 +49,9 @@ class App extends Component {
         </Helmet>
         {loggedIn ? (
           <CurrentUserQuery>
+            <Bar />
             <Feed />
+            <Chats />
           </CurrentUserQuery>
         ) : (
           <LoginRegisterForm

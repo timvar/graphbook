@@ -2,7 +2,7 @@ import React from 'react';
 import AddMessageMutation from '../mutations/addMessage';
 import ChatInput from './input';
 
-export default function ChatWindow({ chat, closeChat, user }) {
+export default function ChatWindow({ chat, closeChat }) {
   return (
     <div className="chatWindow">
       <div className="header">

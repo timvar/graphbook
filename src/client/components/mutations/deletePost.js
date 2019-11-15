@@ -25,48 +25,45 @@ const DELETE_POST = gql`
   }
 `;
 
-export default class DeletePostMutation extends Component {
-  render() {
-    const { children } = this.props;
-    const postId = this.props.post.id;
-    const variables = { page: 0, limit: 10 };
+export default function DeletePostMutation({ children, post }) {
+  const postId = post.id;
+  const variables = { page: 0, limit: 10 };
 
-    return (
-      <Mutation
-        update={(
-          store,
-          {
-            data: {
-              deletePost: { success },
-            },
+  return (
+    <Mutation
+      update={(
+        store,
+        {
+          data: {
+            deletePost: { success },
           },
-        ) => {
-          if (success) {
-            var query = {
-              query: GET_POSTS,
-            };
-            if (typeof variables !== typeof undefined) {
-              query.variables = variables;
-            }
-            const data = store.readQuery(query);
-
-            for (var i = 0; i < data.postsFeed.posts.length; i++) {
-              if (data.postsFeed.posts[i].id === postId) {
-                break;
-              }
-            }
-            data.postsFeed.posts.splice(i, 1);
-            store.writeQuery({ ...query, data });
+        },
+      ) => {
+        if (success) {
+          const query = {
+            query: GET_POSTS,
+          };
+          if (typeof variables !== typeof undefined) {
+            query.variables = variables;
           }
-        }}
-        mutation={DELETE_POST}
-      >
-        {deletePost =>
-          React.Children.map(children, function(child) {
-            return React.cloneElement(child, { deletePost, postId });
-          })
+          const data = store.readQuery(query);
+
+          for (let i = 0; i < data.postsFeed.posts.length; i += 1) {
+            if (data.postsFeed.posts[i].id === postId) {
+              break;
+            }
+          }
+          data.postsFeed.posts.splice(i, 1);
+          store.writeQuery({ ...query, data });
         }
-      </Mutation>
-    );
-  }
+      }}
+      mutation={DELETE_POST}
+    >
+      {deletePost =>
+        React.Children.map(children, child => {
+          return React.cloneElement(child, { deletePost, postId });
+        })
+      }
+    </Mutation>
+  );
 }

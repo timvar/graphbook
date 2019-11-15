@@ -8,7 +8,15 @@ export default class PostForm extends Component {
 
   render() {
     const self = this;
-    const { addPost, updatePost, postContent, postId } = this.props;
+    const {
+      addPost,
+      updatePost,
+      postContent,
+      postId,
+      user,
+    } = this.props;
+
+    console.log('PostForm user', user);
 
     return (
       <div className="postForm">
@@ -24,7 +32,11 @@ export default class PostForm extends Component {
               });
             } else {
               addPost({
-                variables: { post: { text: postContent } },
+                variables: {
+                  post: {
+                    text: postContent,
+                  },
+                },
               }).then(() => {
                 self.props.changePostContent('');
               });

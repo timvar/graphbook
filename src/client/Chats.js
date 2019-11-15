@@ -37,13 +37,12 @@ export default class Chats extends Component {
   };
 
   render() {
-    const { user } = this.props;
     const { openChats } = this.state;
 
     return (
       <div className="wrapper">
         <ChatsQuery>
-          <ChatsList openChat={this.openChat} user={user} />
+          <ChatsList openChat={this.openChat} />
         </ChatsQuery>
         <div className="openChats">
           {openChats.map((chatId, i) => (
@@ -51,7 +50,7 @@ export default class Chats extends Component {
               key={`chatWindow${chatId}`}
               variables={{ chatId }}
             >
-              <ChatWindow closeChat={this.closeChat} user={user} />
+              <ChatWindow closeChat={this.closeChat} />
             </ChatQuery>
           ))}
         </div>

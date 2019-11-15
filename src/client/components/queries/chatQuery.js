@@ -51,7 +51,7 @@ export default class UserQuery extends Component {
             );
 
           const { chat } = data;
-          return React.Children.map(children, function(child) {
+          return React.Children.map(children, child => {
             return React.cloneElement(child, { chat });
           });
         }}

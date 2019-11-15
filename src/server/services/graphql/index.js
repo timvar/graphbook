@@ -20,24 +20,20 @@ export default utils => {
   const server = new ApolloServer({
     schema: executableSchema,
     context: async ({ req }) => {
-      const authorization = req.headers.authorization;
+      const { authorization } = req.headers;
       if (typeof authorization !== typeof undefined) {
         const search = 'Bearer';
         const regEx = new RegExp(search, 'ig');
         const token = authorization.replace(regEx, '').trim();
-        return JWT.verify(token, JWT_SECRET, function(err, result) {
-          console.log('result', result);
-          console.log('apollo server err', err);
-
+        return JWT.verify(token, JWT_SECRET, (err, result) => {
           if (err) {
             return req;
-          } else {
-            return utils.db.models.User.findByPk(result.id).then(
-              user => {
-                return Object.assign({}, req, { user });
-              },
-            );
           }
+          return utils.db.models.User.findByPk(result.id).then(
+            user => {
+              return Object.assign({}, req, { user });
+            },
+          );
         });
       }
       return req;
@@ -46,31 +42,3 @@ export default utils => {
 
   return server;
 };
-
-/*
-context: async ({ req }) => {
-      const { authorization } = req.headers;
-      console.log('authorization', authorization);
-      if (typeof authorization !== typeof undefined) {
-        const search = 'Bearer';
-        const regEx = new RegExp(search, 'ig');
-        const token = authorization.replace(regEx, '').trim();
-        console.log('token', token);
-        return JWT.verify(token, JWT_SECRET, (err, result) => {
-          if (err) {
-            return req;
-          }
-          console.log('result', result);
-          console.log('utils', utils);
-          return utils.db.models.User.findById(result.id).then(
-            user => {
-              return { ...req, user };
-            },
-          );
-        });
-      }
-      return req;
-    },
-
-
-*/
