@@ -16,8 +16,6 @@ export default class PostForm extends Component {
       user,
     } = this.props;
 
-    console.log('PostForm user', user);
-
     return (
       <div className="postForm">
         <form

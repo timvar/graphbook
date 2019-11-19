@@ -57,14 +57,13 @@ export default function resolver() {
         return Post.findAll({ order: [['createdAt', 'DESC']] });
       },
       user(root, { userId }, context) {
-        return User.findById(userId);
+        return User.findByPk(userId);
       },
       chat(root, { chatId }, context) {
-        return Chat.findById(chatId, {
+        return Chat.findByPk(chatId, {
           include: [
             {
               model: User,
-              required: true,
             },
             {
               model: Message,
@@ -73,19 +72,27 @@ export default function resolver() {
         });
       },
       chats(root, args, context) {
-        return Chat.findAll({
-          include: [
-            {
-              model: User,
-              required: true,
-              through: { where: { userId: context.user.id } },
-            },
-            {
-              model: Message,
-            },
-          ],
+        return User.findAll().then(users => {
+          if (!users.length) {
+            return [];
+          }
+
+          const usersRow = users[0];
+          console.log('usersRow.id', usersRow.id);
+          return Chat.findAll({
+            include: [
+              {
+                model: User,
+                through: { where: { userId: usersRow.id } },
+              },
+              {
+                model: Message,
+              },
+            ],
+          });
         });
       },
+
       postsFeed(root, { page, limit }, context) {
         let skip = 0;
 
@@ -170,17 +177,19 @@ export default function resolver() {
           level: 'info',
           message: 'Message was created',
         });
-        return Message.create({
-          ...message,
-        }).then(newMessage => {
-          return Promise.all([
-            newMessage.setUser(context.user.id),
-            newMessage.setChat(message.chatId),
-          ]).then(() => {
-            pubsub.publish('messageAdded', {
-              messageAdded: newMessage,
+
+        return User.findAll().then(users => {
+          const usersRow = users[0];
+
+          return Message.create({
+            ...message,
+          }).then(newMessage => {
+            return Promise.all([
+              newMessage.setUser(usersRow.id),
+              newMessage.setChat(message.chatId),
+            ]).then(() => {
+              return newMessage;
             });
-            return newMessage;
           });
         });
       },
@@ -201,7 +210,7 @@ export default function resolver() {
               message: `Post ${postId} was updated`,
             });
 
-            return Post.findById(postId);
+            return Post.findByPk(postId);
           }
           throw new Error('Post was not updated.');
         });
