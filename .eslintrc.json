@@ -28,7 +28,8 @@
   "rules": {
     "prettier/prettier": ["error"],
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-    "react/prop-types": [0],
-    "no-unused-vars": ["error", { "vars": "local", "args": "none" }]
+    "react/prop-types": [1],
+    "no-unused-vars": ["error", { "vars": "local", "args": "none" }],
+    "react/jsx-curly-newline": [1, { "multiline": "forbid", "singleline": "forbid" }] 
   }
 }

@@ -3,20 +3,20 @@
 /* eslint-disable spaced-comment */
 import { ApolloClient } from 'apollo-client';
 import { InMemoryCache } from 'apollo-cache-inmemory';
-import { HttpLink, createHttpLink } from 'apollo-link-http';
+//import { HttpLink, createHttpLink } from 'apollo-link-http';
 import { onError } from 'apollo-link-error';
 import { ApolloLink } from 'apollo-link';
-// import { createUploadLink } from 'apollo-upload-client';
+import { createUploadLink } from 'apollo-upload-client';
 
 // const link = new HttpLink({ uri: 'http://localhost:8000/graphql' });
-// const uploadLink = () => createUploadLink({
-//   uri: 'http://localhost:8000/graphql',
-//   credentials: 'same-origin',
-// });
-const cache = new InMemoryCache();
-const httpLink = createHttpLink({
+const uploadLink = createUploadLink({
   uri: 'http://localhost:8000/graphql',
+  credentials: 'same-origin',
 });
+const cache = new InMemoryCache();
+//const httpLink = createHttpLink({
+//  uri: 'http://localhost:8000/graphql',
+//});
 const loggerLink = new ApolloLink((operation, forward) => {
   console.log(`GraphQL Request: ${operation.operationName}`);
   operation.setContext({ start: new Date() });
@@ -64,7 +64,7 @@ const client = new ApolloClient({
       }
     }),
     authLink,
-    httpLink,
+    uploadLink,
   ]),
 });
 

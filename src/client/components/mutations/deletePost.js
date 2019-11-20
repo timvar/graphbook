@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Mutation } from 'react-apollo';
 import gql from 'graphql-tag';
 
@@ -28,6 +28,9 @@ const DELETE_POST = gql`
 export default function DeletePostMutation({ children, post }) {
   const postId = post.id;
   const variables = { page: 0, limit: 10 };
+  const query = {
+    query: GET_POSTS,
+  };
 
   return (
     <Mutation
@@ -40,9 +43,6 @@ export default function DeletePostMutation({ children, post }) {
         },
       ) => {
         if (success) {
-          const query = {
-            query: GET_POSTS,
-          };
           if (typeof variables !== typeof undefined) {
             query.variables = variables;
           }
@@ -50,10 +50,10 @@ export default function DeletePostMutation({ children, post }) {
 
           for (let i = 0; i < data.postsFeed.posts.length; i += 1) {
             if (data.postsFeed.posts[i].id === postId) {
+              data.postsFeed.posts.splice(i, 1);
               break;
             }
           }
-          data.postsFeed.posts.splice(i, 1);
           store.writeQuery({ ...query, data });
         }
       }}

@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-wrap-multilines */
 import React, { Component } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import Post from './index';
@@ -48,7 +49,7 @@ export default class FeedList extends Component {
           loadMore={() => this.loadMore(fetchMore)}
           hasMore={hasMore}
           loader={
-            <div className="loader" key={'loader'}>
+            <div className="loader" key="loader">
               Loading ...
             </div>
           }

@@ -46,13 +46,13 @@ export default class UpdatePostMutation extends Component {
 
     const postId = post.id;
     const variables = { page: 0, limit: 10 };
+    const query = {
+      query: GET_POSTS,
+    };
 
     return (
       <Mutation
         update={(store, { data: { updatePost } }) => {
-          const query = {
-            query: GET_POSTS,
-          };
           if (typeof variables !== typeof undefined) {
             query.variables = variables;
           }
@@ -75,7 +75,7 @@ export default class UpdatePostMutation extends Component {
         mutation={UPDATE_POST}
       >
         {updatePost =>
-          React.Children.map(children, function(child) {
+          React.Children.map(children, child => {
             return React.cloneElement(child, {
               updatePost,
               postContent,

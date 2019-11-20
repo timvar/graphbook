@@ -9,6 +9,9 @@ export default function Bar() {
     <div className="topbar">
       <div className="inner">
         <SearchBar />
+        <UserConsumer>
+          <UserBar />
+        </UserConsumer>
       </div>
       <div className="buttons">
         <Logout />
@@ -16,10 +19,3 @@ export default function Bar() {
     </div>
   );
 }
-
-/*
-<UserConsumer>
-          <UserBar />
-        </UserConsumer>
-
-*/

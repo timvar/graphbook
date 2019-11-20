@@ -49,6 +49,8 @@ class App extends Component {
         </Helmet>
         {loggedIn ? (
           <CurrentUserQuery>
+            <Bar />
+            <Feed />
             <Chats />
           </CurrentUserQuery>
         ) : (
@@ -62,11 +64,3 @@ class App extends Component {
 }
 
 export default withApollo(App);
-
-/*
-<CurrentUserQuery>
-            <Bar />
-            <Feed />
-            <Chats />
-          </CurrentUserQuery>
-*/

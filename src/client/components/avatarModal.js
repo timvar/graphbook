@@ -40,11 +40,13 @@ export default class AvatarUpload extends Component {
     this.state = {
       result: null,
       filename: null,
-      filetype: null,
       src: null,
-      error: null,
     };
   }
+
+  changeImage = () => {
+    this.setState({ src: null });
+  };
 
   onChange = value => {
     this.setState(value);
@@ -58,10 +60,6 @@ export default class AvatarUpload extends Component {
     uploadAvatar({ variables: { file } }).then(() => {
       showModal();
     });
-  };
-
-  changeImage = () => {
-    this.setState({ src: null });
   };
 
   render() {
@@ -87,7 +85,7 @@ export default class AvatarUpload extends Component {
         <button
           type="button"
           className="uploadAvatar"
-          onClick={this.upload}
+          onClick={() => this.upload()}
         >
           Save
         </button>

@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import gql from 'graphql-tag';
 import { Query, Mutation } from 'react-apollo';
+import ChatWindow from './components/chat/window';
+import ChatQuery from './components/queries/chatQuery';
+import ChatsQuery from './components/queries/chatsQuery';
+import ChatsList from './components/chat/list';
 
 const GET_CHATS = gql`
   {
@@ -264,3 +268,26 @@ export default class Chats extends Component {
     );
   }
 }
+
+/*
+render() {
+        const { user } = this.props;
+        const { openChats } = this.state;
+
+        return (
+            <div className="wrapper">
+                <ChatsQuery><ChatsList openChat={this.openChat} user={user}/></ChatsQuery>
+                <div className="openChats">
+                    {openChats.map((chatId, i) => 
+                        <ChatQuery key={"chatWindow" + chatId} variables={{ chatId }}>
+                            <ChatWindow closeChat={this.closeChat} user={user}/>
+                        </ChatQuery>
+                    )}
+                </div>
+            </div>
+        )
+    }
+
+
+
+*/

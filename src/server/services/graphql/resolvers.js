@@ -283,6 +283,7 @@ export default function resolver() {
           ACL: 'public-read',
           Body: stream,
         };
+        console.log('uploadAvatar file', file);
 
         const response = await s3.upload(params).promise();
 

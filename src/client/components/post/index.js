@@ -1,4 +1,3 @@
-/* eslint-disable react/static-property-placement */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import PostHeader from './header';
@@ -8,7 +7,6 @@ import UpdatePostMutation from '../mutations/updatePost';
 
 export default class Post extends Component {
   static propTypes = {
-    /** Object containing the complete post. */
     post: PropTypes.shape({
       id: PropTypes.number.isRequired,
       text: PropTypes.string.isRequired,

@@ -6,41 +6,42 @@ export default class PostForm extends Component {
     changePostContent(event.target.value);
   };
 
-  render() {
-    const self = this;
+  handeFormSubmit = e => {
     const {
       addPost,
       updatePost,
       postContent,
       postId,
-      user,
+      changePostContent,
+      changeState,
     } = this.props;
+    e.preventDefault();
+    if (typeof updatePost !== typeof undefined) {
+      updatePost({
+        variables: { post: { text: postContent }, postId },
+      }).then(() => {
+        changeState();
+      });
+    } else {
+      addPost({
+        variables: {
+          post: {
+            text: postContent,
+          },
+        },
+      }).then(() => {
+        changePostContent('');
+      });
+    }
+  };
+
+  render() {
+    const self = this;
+    const { postContent } = this.props;
 
     return (
       <div className="postForm">
-        <form
-          onSubmit={e => {
-            e.preventDefault();
-
-            if (typeof updatePost !== typeof undefined) {
-              updatePost({
-                variables: { post: { text: postContent }, postId },
-              }).then(() => {
-                self.props.changeState();
-              });
-            } else {
-              addPost({
-                variables: {
-                  post: {
-                    text: postContent,
-                  },
-                },
-              }).then(() => {
-                self.props.changePostContent('');
-              });
-            }
-          }}
-        >
+        <form onSubmit={e => this.handeFormSubmit(e)}>
           <textarea
             value={postContent}
             onChange={self.handlePostContentChange}
