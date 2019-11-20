@@ -70,7 +70,7 @@ export default class AddPostMutation extends Component {
             user: {
               __typename: 'User',
               username: 'Loading...',
-              avatar: '/public/loading.gif',
+              avatar: '/uploads/pig.jpg',
             },
           },
         }}

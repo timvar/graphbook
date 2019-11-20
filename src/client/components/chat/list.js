@@ -42,8 +42,8 @@ export default function ChatsList({ chats, openChat }) {
             <img
               alt=""
               src={
-                chat.users.length > 2
-                  ? '/public/group.png'
+                chat.users.length > 1
+                  ? '/uploads/pig.jpg'
                   : chat.users[1].avatar
               }
             />

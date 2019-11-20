@@ -49,7 +49,7 @@ class App extends Component {
         </Helmet>
         {loggedIn ? (
           <CurrentUserQuery>
-            <Bar />
+            <Bar changeLoginState={this.changeLoginState} />
             <Feed />
             <Chats />
           </CurrentUserQuery>

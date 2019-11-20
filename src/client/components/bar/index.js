@@ -4,7 +4,7 @@ import UserBar from './user';
 import UserConsumer from '../context/user';
 import Logout from './logout';
 
-export default function Bar() {
+export default function Bar({ changeLoginState }) {
   return (
     <div className="topbar">
       <div className="inner">
@@ -14,7 +14,7 @@ export default function Bar() {
         </UserConsumer>
       </div>
       <div className="buttons">
-        <Logout />
+        <Logout changeLoginState={changeLoginState} />
       </div>
     </div>
   );
