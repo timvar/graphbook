@@ -20,8 +20,7 @@ const GET_CHATS = gql`
   }
 `;
 
-export default function UserQuery({ children }) {
-  console.log('chatsquery');
+export default function ChatsQuery({ children }) {
   return (
     <Query query={GET_CHATS}>
       {({ loading, error, data }) => {

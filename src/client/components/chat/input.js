@@ -26,7 +26,6 @@ export default class ChatInput extends Component {
 
   onChangeChatInput = event => {
     event.preventDefault();
-
     this.setState({ value: event.target.value });
   };
 
@@ -37,8 +36,8 @@ export default class ChatInput extends Component {
         <input
           type="text"
           value={value}
-          onChange={this.onChangeChatInput}
-          onKeyPress={this.handleKeyPress}
+          onChange={e => this.onChangeChatInput(e)}
+          onKeyPress={e => this.handleKeyPress(e)}
         />
       </div>
     );
