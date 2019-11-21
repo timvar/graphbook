@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
 import { withApollo } from 'react-apollo';
-import Feed from './Feed';
-import Chats from './Chats';
+import Router from './router';
+
 import '../assets/css/style.css';
 import './components/fontawesome';
-import Bar from './components/bar';
-import LoginRegisterForm from './components/loginregister';
-import CurrentUserQuery from './components/queries/currentUser';
 import '@synapsestudios/react-drop-n-crop/lib/react-drop-n-crop.min.css';
 
 class App extends Component {
@@ -39,6 +36,30 @@ class App extends Component {
   render() {
     const { loggedIn } = this.state;
     return (
+      <div>
+        <Helmet>
+          <title>Graphbook - Feed</title>
+          <meta
+            name="description"
+            content="Newsfeed of all your friends   
+           on Graphbook"
+          />
+        </Helmet>
+        <Router
+          loggedIn={loggedIn}
+          changeLoginState={this.changeLoginState}
+        />
+      </div>
+    );
+  }
+}
+
+export default withApollo(App);
+
+/*
+render() {
+    const { loggedIn } = this.state;
+    return (
       <div className="container">
         <Helmet>
           <title>Graphbook - Feed</title>
@@ -61,6 +82,6 @@ class App extends Component {
       </div>
     );
   }
-}
 
-export default withApollo(App);
+
+*/

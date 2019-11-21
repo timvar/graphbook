@@ -27,6 +27,11 @@ p {
   vertical-align: middle;
 }
 
+.post .header a > * {
+  display: inline-block;
+  vertical-align: middle;
+}
+
 .post .header img, .chats .chat .header img {
   width: 50px;
   height: 50px;
@@ -296,89 +301,11 @@ form [type=submit] {
   padding-bottom: 40px;
 }
 
-.topbar {
-  width: 100%;
-  left: 0;
-  height: 50px;
-  background-color: #6ca6fd;
-  position: fixed;
-  top: 0;
-  z-index: 5;
-}
-
 .inner {
   width: 800px;
   height: 100%;
   margin: auto;
   position: relative;
-}
-
-.topbar .inner .search {
-  height: calc(100% - 20px);
-  padding: 10px;
-  width: 50%;
-  display: inline-block;
-  vertical-align: middle;
-}
-
-.topbar .inner .search input {
-  border: none;
-  height: 100%;
-  padding: 0;
-  width: 100%;
-  outline: none;
-}
-
-.topbar .inner .user {
-  position: absolute;
-  right: 0;
-  display: inline-block;
-  height: 100%;
-}
-
-.topbar .buttons {
-  position: absolute;
-  right: 5px;
-  top: 5px;
-  height: calc(100% - 10px);
-}
-
-.topbar .buttons > * {
-  height: 100%;
-  margin-right: 5px;
-  border: none;
-  border-radius: 5px;
-}
-
-.topbar .inner .user > * {
-  display: inline-block;
-  vertical-align: middle;
-}
-
-.topbar .inner .user img {
-  height: calc(100% - 10px);
-  margin: 5px;
-  border: none;
-  min-width: 40px;
-  background-color: #ccc;
-}
-
-.topbar .error.message{
-  margin: 0;
-  display: inline-block;
-}
-
-.topbar .search .result {
-  width: calc(100% - 2px);
-  border: 1px solid #c3c3c3;
-  margin-top: 1px;
-}
-
-.topbar .search .result .user {
-  position: relative;
-  height: 50px;
-  width: 100%;
-  background-color: #fff;
 }
 
 .authModal {
@@ -439,3 +366,81 @@ button.uploadAvatar {
   float: right;
   margin-top: 10px;
 }
+
+.topbar .buttons {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  height: calc(100% - 10px);
+}
+
+.topbar .buttons > * {
+  height: 100%;
+  margin-right: 5px;
+  border: none;
+  border-radius: 5px;
+}
+.topbar {
+  width: 100%;
+  left: 0;
+  height: 50px;
+  background-color: #6ca6fd;
+  position: fixed;
+  top: 0;
+  z-index: 5;
+}
+
+.topbar .inner .search {
+  height: calc(100% - 20px);
+  padding: 10px;
+  width: 50%;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.topbar .inner .search input {
+  border: none;
+  height: 100%;
+  padding: 0;
+  width: 100%;
+  outline: none;
+}
+
+.topbar .inner .user {
+  position: absolute;
+  right: 0;
+  display: inline-block;
+  height: 100%;
+}
+
+.topbar .inner .user > * {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.topbar .inner .user img {
+  height: calc(100% - 10px);
+  margin: 5px;
+  border: none;
+  min-width: 40px;
+  background-color: #ccc;
+}
+
+.topbar .error.message{
+  margin: 0;
+  display: inline-block;
+}
+
+.topbar .search .result {
+  width: calc(100% - 2px);
+  border: 1px solid #c3c3c3;
+  margin-top: 1px;
+}
+
+.topbar .search .result .user {
+  position: relative;
+  height: 50px;
+  width: 100%;
+  background-color: #fff;
+}
+
