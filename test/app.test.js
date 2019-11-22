@@ -32,6 +32,33 @@ global.document = window.document;
 
 describe('Graphbook application test', function() {
   var app;
+  this.timeout(50000);
+
+  before(function(done) {
+    app = require('../src/server').default;
+    app.on('listening', function() {
+      done();
+    });
+  });
+
+  after(function(done) {
+    app.close(done);
+  });
+
+  it('renders and serves the index page', done => {
+    request('http://localhost:8000', (err, res, body) => {
+      should.not.exist(err);
+      should.exist(res);
+      expect(res.statusCode).to.be.equal(200);
+      assert.ok(body.indexOf('<html') !== -1);
+      done(err);
+    });
+  });
+});
+
+/*
+describe('Graphbook application test', function() {
+  var app;
   var authToken;
   this.timeout(50000);
 
@@ -55,7 +82,9 @@ describe('Graphbook application test', function() {
       done(err);
     });
   });
-  /*
+
+  */
+/*
   describe('404', function() {
     it('redirects the user when not matching path is found', function(done) {
       request(
@@ -220,5 +249,6 @@ describe('Graphbook application test', function() {
       }, 2000);
     });
   });
-  */
+  
 });
+*/

@@ -3,6 +3,7 @@ import path from 'path';
 import helmet from 'helmet';
 import cors from 'cors';
 import compress from 'compression';
+import { createServer } from 'http';
 import servicesLoader from './services';
 import db from './database';
 
@@ -12,6 +13,7 @@ const utils = {
 const services = servicesLoader(utils);
 const root = path.join(__dirname, '../../');
 const app = express();
+const server = createServer(app);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(helmet());
@@ -47,3 +49,5 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(root, '/dist/client/index.html'));
 });
 app.listen(8000, () => console.log('Listening on port 8000!'));
+
+export default server;
