@@ -5,8 +5,17 @@ import { ApolloLink } from 'apollo-link';
 import { HttpLink } from 'apollo-link-http';
 import fetch from 'node-fetch';
 
-export default req => {
+export default (req, loggedIn) => {
   const AuthLink = (operation, next) => {
+    if (loggedIn) {
+      operation.setContext(context => ({
+        ...context,
+        headers: {
+          ...context.headers,
+          Authorization: req.cookies.get('authorization'),
+        },
+      }));
+    }
     return next(operation);
   };
   const client = new ApolloClient({

@@ -4,7 +4,7 @@ import { ApolloProvider } from 'react-apollo';
 import App from './App';
 import client from './apollo';
 
-ReactDOM.render(
+ReactDOM.hydrate(
   <ApolloProvider client={client}>
     <App />
   </ApolloProvider>,

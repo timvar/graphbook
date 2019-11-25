@@ -145,6 +145,18 @@ export default function resolver() {
       },
     },
     RootMutation: {
+      logout(root, params, context) {
+        context.cookies.set('authorization', '', {
+          signed: true,
+          expires: new Date(),
+          httpOnly: true,
+          secure: false,
+          sameSite: 'strict',
+        });
+        return {
+          message: true,
+        };
+      },
       addPost(root, { post }, context) {
         logger.log({
           level: 'info',
@@ -265,6 +277,18 @@ export default function resolver() {
                 expiresIn: '1d',
               },
             );
+            const cookieExpiration = 1;
+            const expirationDate = new Date();
+            expirationDate.setDate(
+              expirationDate.getDate() + cookieExpiration,
+            );
+            context.cookies.set('authorization', token, {
+              signed: true,
+              expires: expirationDate,
+              httpOnly: true,
+              secure: false,
+              sameSite: 'strict',
+            });
 
             return {
               token,
@@ -324,6 +348,18 @@ export default function resolver() {
                     expiresIn: '1d',
                   },
                 );
+                const cookieExpiration = 1;
+                const expirationDate = new Date();
+                expirationDate.setDate(
+                  expirationDate.getDate() + cookieExpiration,
+                );
+                context.cookies.set('authorization', token, {
+                  signed: true,
+                  expires: expirationDate,
+                  httpOnly: true,
+                  secure: false,
+                  sameSite: 'strict',
+                });
                 return {
                   token,
                 };

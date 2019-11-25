@@ -5,12 +5,17 @@ import '../../client/components/fontawesome';
 import Router from '../../client/router';
 
 class App extends Component {
-  state = {
-    loggedIn: false,
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      loggedIn: this.props.loggedIn,
+    };
+  }
+
   changeLoginState = loggedIn => {
     this.setState({ loggedIn });
   };
+
   render() {
     return (
       <div>
