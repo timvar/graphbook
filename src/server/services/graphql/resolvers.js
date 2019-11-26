@@ -2,7 +2,10 @@ import Sequelize from 'sequelize';
 import bcrypt from 'bcrypt';
 import JWT from 'jsonwebtoken';
 import aws from 'aws-sdk';
+import { PubSub, withFilter } from 'graphql-subscriptions';
 import logger from '../../helpers/logger';
+
+const pubsub = new PubSub();
 
 const s3 = new aws.S3({
   signatureVersion: 'v4',
@@ -92,7 +95,7 @@ export default function resolver() {
           ],
         });
       },
-      postsFeed(root, { page, limit }, context) {
+      postsFeed(root, { page, limit, username }, context) {
         let skip = 0;
 
         if (page && limit) {
@@ -106,6 +109,11 @@ export default function resolver() {
 
         if (limit) {
           query.limit = limit;
+        }
+
+        if (typeof username !== typeof undefined) {
+          query.include = [{ model: User }];
+          query.where = { '$User.username$': username };
         }
 
         return {
@@ -140,6 +148,18 @@ export default function resolver() {
       },
     },
     RootMutation: {
+      logout(root, params, context) {
+        context.cookies.set('authorization', '', {
+          signed: true,
+          expires: new Date(),
+          httpOnly: true,
+          secure: false,
+          sameSite: 'strict',
+        });
+        return {
+          message: true,
+        };
+      },
       addPost(root, { post }, context) {
         logger.log({
           level: 'info',
@@ -183,6 +203,9 @@ export default function resolver() {
             newMessage.setUser(context.user.id),
             newMessage.setChat(message.chatId),
           ]).then(() => {
+            pubsub.publish('messageAdded', {
+              messageAdded: newMessage,
+            });
             return newMessage;
           });
         });
@@ -260,6 +283,18 @@ export default function resolver() {
                 expiresIn: '1d',
               },
             );
+            const cookieExpiration = 1;
+            const expirationDate = new Date();
+            expirationDate.setDate(
+              expirationDate.getDate() + cookieExpiration,
+            );
+            context.cookies.set('authorization', token, {
+              signed: true,
+              expires: expirationDate,
+              httpOnly: true,
+              secure: false,
+              sameSite: 'strict',
+            });
 
             return {
               token,
@@ -269,7 +304,7 @@ export default function resolver() {
         });
       },
       async uploadAvatar(root, { file }, context) {
-        const { stream, filename, mimetype, encoding } = await file;
+        const { stream, filename } = await file;
         const bucket = 'pepe-graphbook';
         const params = {
           Bucket: bucket,
@@ -319,6 +354,18 @@ export default function resolver() {
                     expiresIn: '1d',
                   },
                 );
+                const cookieExpiration = 1;
+                const expirationDate = new Date();
+                expirationDate.setDate(
+                  expirationDate.getDate() + cookieExpiration,
+                );
+                context.cookies.set('authorization', token, {
+                  signed: true,
+                  expires: expirationDate,
+                  httpOnly: true,
+                  secure: false,
+                  sameSite: 'strict',
+                });
                 return {
                   token,
                 };
@@ -326,6 +373,35 @@ export default function resolver() {
             });
           }
         });
+      },
+    },
+    RootSubscription: {
+      messageAdded: {
+        subscribe: withFilter(
+          () => pubsub.asyncIterator('messageAdded'),
+          (payload, variables, context) => {
+            if (payload.messageAdded.UserId !== context.user.id) {
+              return Chat.findOne({
+                where: {
+                  id: payload.messageAdded.ChatId,
+                },
+                include: [
+                  {
+                    model: User,
+                    required: true,
+                    through: { where: { userId: context.user.id } },
+                  },
+                ],
+              }).then(chat => {
+                if (chat !== null) {
+                  return true;
+                }
+                return false;
+              });
+            }
+            return false;
+          },
+        ),
       },
     },
   };

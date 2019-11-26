@@ -23,7 +23,7 @@ const GET_CHATS = gql`
 export default function ChatsQuery({ children }) {
   return (
     <Query query={GET_CHATS}>
-      {({ loading, error, data }) => {
+      {({ loading, error, data, subscribeToMore }) => {
         if (loading) return <Loading />;
         if (error)
           return (
@@ -34,7 +34,10 @@ export default function ChatsQuery({ children }) {
 
         const { chats } = data;
         return React.Children.map(children, child => {
-          return React.cloneElement(child, { chats });
+          return React.cloneElement(child, {
+            chats,
+            subscribeToMore,
+          });
         });
       }}
     </Query>

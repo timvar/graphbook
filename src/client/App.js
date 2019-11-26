@@ -1,13 +1,12 @@
+/* eslint-disable no-underscore-dangle */
 import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
 import { withApollo } from 'react-apollo';
-import Feed from './Feed';
-import Chats from './Chats';
+import Router from './router';
+import 'react-toastify/dist/ReactToastify.css';
+
 import '../assets/css/style.css';
 import './components/fontawesome';
-import Bar from './components/bar';
-import LoginRegisterForm from './components/loginregister';
-import CurrentUserQuery from './components/queries/currentUser';
 import '@synapsestudios/react-drop-n-crop/lib/react-drop-n-crop.min.css';
 
 class App extends Component {
@@ -17,15 +16,13 @@ class App extends Component {
       this.changeLoginState(false),
     );
     this.state = {
-      loggedIn: false,
+      loggedIn:
+        typeof window.__APOLLO_STATE__ !== typeof undefined &&
+        typeof window.__APOLLO_STATE__.ROOT_QUERY !==
+          typeof undefined &&
+        typeof window.__APOLLO_STATE__.ROOT_QUERY.currentUser !==
+          typeof undefined,
     };
-  }
-
-  componentWillMount() {
-    const token = localStorage.getItem('jwt');
-    if (token) {
-      this.setState({ loggedIn: true });
-    }
   }
 
   componentWillUnmount() {
@@ -37,6 +34,30 @@ class App extends Component {
   };
 
   render() {
+    const { loggedIn } = this.state;
+    return (
+      <div>
+        <Helmet>
+          <title>Graphbook - Feed</title>
+          <meta
+            name="description"
+            content="Newsfeed of all your friends   
+           on Graphbook"
+          />
+        </Helmet>
+        <Router
+          loggedIn={loggedIn}
+          changeLoginState={this.changeLoginState}
+        />
+      </div>
+    );
+  }
+}
+
+export default withApollo(App);
+
+/*
+render() {
     const { loggedIn } = this.state;
     return (
       <div className="container">
@@ -61,6 +82,6 @@ class App extends Component {
       </div>
     );
   }
-}
 
-export default withApollo(App);
+
+*/

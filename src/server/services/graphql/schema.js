@@ -11,6 +11,7 @@ const typeDefinitions = `
     id: Int
     avatar: String
     username: String
+    email: String
   }
 
   type Post {
@@ -96,21 +97,27 @@ const typeDefinitions = `
     uploadAvatar (
       file: Upload!
     ): File @auth
+    logout: Response @auth
   }
 
   type RootQuery {
     posts: [Post]
     chats: [Chat]
-    user(userId: Int): User
+    user(username: String!): User @auth
     chat(chatId: Int): Chat
-    postsFeed(page: Int, limit: Int): PostFeed @auth
+    postsFeed(page: Int, limit: Int, username: String): PostFeed @auth
     usersSearch(page: Int, limit: Int, text: String!): UsersSearch
     currentUser: User @auth
+  }
+
+  type RootSubscription {
+    messageAdded: Message
   }
 
   schema {
     query: RootQuery
     mutation: RootMutation
+    subscription: RootSubscription
   }
 `;
 

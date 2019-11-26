@@ -3,6 +3,8 @@ import SearchBar from './search';
 import UserBar from './user';
 import UserConsumer from '../context/user';
 import Logout from './logout';
+import Home from './home';
+import LogoutMutation from '../mutations/logout';
 
 export default function Bar({ changeLoginState }) {
   return (
@@ -14,7 +16,10 @@ export default function Bar({ changeLoginState }) {
         </UserConsumer>
       </div>
       <div className="buttons">
-        <Logout changeLoginState={changeLoginState} />
+        <Home />
+        <LogoutMutation>
+          <Logout changeLoginState={changeLoginState} />
+        </LogoutMutation>
       </div>
     </div>
   );

@@ -2,18 +2,21 @@ import React, { Component } from 'react';
 import { withApollo } from 'react-apollo';
 
 class Logout extends Component {
-  logout = () => {
-    const { changeLoginState, client } = this.props;
-    const { resetStore } = client;
-
-    localStorage.removeItem('jwt');
-    changeLoginState(false);
-    resetStore();
+  doLogout = () => {
+    const { logout, client } = this.props;
+    logout().then(() => {
+      localStorage.removeItem('jwt');
+      client.resetStore();
+    });
   };
 
   render() {
     return (
-      <button type="button" className="logout" onClick={this.logout}>
+      <button
+        type="button"
+        className="logout"
+        onClick={this.doLogout}
+      >
         Logout
       </button>
     );
