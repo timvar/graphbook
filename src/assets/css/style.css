@@ -444,3 +444,6 @@ button.uploadAvatar {
   background-color: #fff;
 }
 
+.Toastify__toast-container--top-left {
+  top: 4em !important;
+}

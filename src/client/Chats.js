@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
+import { ToastContainer } from 'react-toastify';
 import ChatWindow from './components/chat/window';
 import ChatQuery from './components/queries/chatQuery';
 import ChatsQuery from './components/queries/chatsQuery';
 import ChatsList from './components/chat/list';
+import MessageAddedSubscription from './components/subscriptions/messageAdded';
+import ChatNotification from './components/chat/notification';
 
 export default class Chats extends Component {
   constructor(props) {
@@ -44,10 +47,15 @@ export default class Chats extends Component {
 
   render() {
     const { openChats } = this.state;
+    const { user } = this.props;
     return (
       <div className="wrapper">
+        <ToastContainer />
+        <MessageAddedSubscription>
+          <ChatNotification />
+        </MessageAddedSubscription>
         <ChatsQuery>
-          <ChatsList openChat={this.openChat} />
+          <ChatsList openChat={this.openChat} user={user} />
         </ChatsQuery>
         <div className="openChats">
           {openChats.map((chatId, i) => (
@@ -55,7 +63,7 @@ export default class Chats extends Component {
               key={`chatWindow${chatId}`}
               variables={{ chatId }}
             >
-              <ChatWindow closeChat={this.closeChat} />
+              <ChatWindow closeChat={this.closeChat} user={user} />
             </ChatQuery>
           ))}
         </div>

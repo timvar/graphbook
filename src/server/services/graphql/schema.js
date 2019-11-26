@@ -110,9 +110,14 @@ const typeDefinitions = `
     currentUser: User @auth
   }
 
+  type RootSubscription {
+    messageAdded: Message
+  }
+
   schema {
     query: RootQuery
     mutation: RootMutation
+    subscription: RootSubscription
   }
 `;
 

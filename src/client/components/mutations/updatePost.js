@@ -70,6 +70,7 @@ export default class UpdatePostMutation extends Component {
           updatePost: {
             __typename: 'Post',
             text: postContent,
+            id: postId,
           },
         }}
         mutation={UPDATE_POST}

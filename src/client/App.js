@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { Helmet } from 'react-helmet';
 import { withApollo } from 'react-apollo';
 import Router from './router';
+import 'react-toastify/dist/ReactToastify.css';
 
 import '../assets/css/style.css';
 import './components/fontawesome';
