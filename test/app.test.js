@@ -1,26 +1,23 @@
 /* eslint-disable spaced-comment */
-//import React from 'react';
-//import { ApolloClient } from 'apollo-client';
-//import { InMemoryCache } from 'apollo-cache-inmemory';
-//import { ApolloLink } from 'apollo-link';
-//import { createUploadLink } from 'apollo-upload-client';
-//import App from '../src/server/ssr';
-//import { configure, mount } from 'enzyme';
-// import { configure } from 'enzyme';
-// import Adapter from 'enzyme-adapter-react-16';
-
-//configure({ adapter: new Adapter() });
-//import register from 'ignore-styles';
-//register(['.css', '.sass', '.scss']);
-
 const assert = require('assert');
 const request = require('request');
 const expect = require('chai').expect;
 const should = require('chai').should();
 require('babel-plugin-require-context-hook/register')();
 
-//require('isomorphic-fetch');
-/*
+import React from 'react';
+import { ApolloClient } from 'apollo-client';
+import { InMemoryCache } from 'apollo-cache-inmemory';
+import { ApolloLink } from 'apollo-link';
+import { createUploadLink } from 'apollo-upload-client';
+import App from '../src/server/ssr';
+import { configure, mount } from 'enzyme';
+import Adapter from 'enzyme-adapter-react-16';
+configure({ adapter: new Adapter() });
+import register from 'ignore-styles';
+register(['.css', '.sass', '.scss']);
+require('isomorphic-fetch');
+
 const { JSDOM } = require('jsdom');
 const dom = new JSDOM('<!doctype html><html><body></body></html>', {
   url: 'http://graphbook.test',
@@ -28,7 +25,6 @@ const dom = new JSDOM('<!doctype html><html><body></body></html>', {
 const { window } = dom;
 global.window = window;
 global.document = window.document;
-*/
 
 describe('Graphbook application test', function() {
   var app;
